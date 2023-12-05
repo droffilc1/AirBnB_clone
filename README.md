@@ -38,7 +38,7 @@ Here you're copying the contents of the AirBnB_clone repository on GitHub to you
 Change to the repository directory on your computer (if you are not already there):
 
 ```bash
-cd cAirBnB_clone
+cd AirBnB_clone
 ```
 
 ### Usage
