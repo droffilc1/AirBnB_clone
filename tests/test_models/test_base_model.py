@@ -20,7 +20,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_str_rep(self):
         """Test the string representation"""
-        output = "['BaseModel'] ({}) {}".format(
+        output = "[BaseModel] ({}) {}".format(
             self.my_model.id,
             self.my_model.__dict__
         )
