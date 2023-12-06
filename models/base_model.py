@@ -11,7 +11,7 @@ class BaseModel:
     for other classes.
 
         """
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializing the instances
 
         Args:
@@ -22,12 +22,23 @@ class BaseModel:
                     instance is created and it will be updated every time
                     you change your object.
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == '__class__':
+                    continue
+                if key in ('created_at', 'updated_at'):
+                    date_format = '%Y-%m-%dT%H:%M:%S.%f'
+                    date_time = datetime.strptime(kwargs[key], date_format)
+                    setattr(self, key, date_time)
+                    continue
+                setattr(self, key, kwargs[key])
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
-        return f"{[self.__class__.__name__]} ({self.id}) {self.__dict__}"
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
         """Updates the updates the public instance attribute updated_at
