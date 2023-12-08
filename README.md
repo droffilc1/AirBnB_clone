@@ -121,6 +121,6 @@ This directory will contain all storage classes using the same prototype. Curren
 
 ## Contributors
 
-This project was jointly created by [Melody Tsekeni](https://github.com/Mia-Tee) and [Clifford Mapesa](https://www.github.com/droffilc1)
+This project was created by [Clifford Mapesa](https://www.github.com/droffilc1)
 
 
