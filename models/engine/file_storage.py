@@ -3,7 +3,6 @@
 
 import os.path
 import json
-from json.decoder import JSONDecodeError
 from ..base_model import BaseModel
 from ..user import User
 from ..place import Place
@@ -48,15 +47,12 @@ class FileStorage:
     def reload(self):
         """Deserializes the JSON file to __objects"""
         try:
-            if os.path.exists(self.__file_path):
-                try:
-                    with open(self.__file_path, 'r', encoding='utf-8')\
-                            as file:
-                        obj_dict = json.load(file)
-                        for key, value in obj_dict.items():
-                            obj, obj_id = key.split(".")
-                            self.__objects[key] = globals()[obj](**value)
-                except JSONDecodeError:
-                    pass
+            if os.path.isfile(self.__file_path):
+                with open(self.__file_path, 'r', encoding='utf-8') as file:
+                    obj_dict = json.load(file)
+                    for key, value in obj_dict.items():
+                        obj, obj_id = key.split(".")
+                        if obj in self.class_dict:
+                            self.__objects[key] = self.class_dict[obj](**value)
         except FileNotFoundError:
             pass
