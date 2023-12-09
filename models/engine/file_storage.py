@@ -29,33 +29,34 @@ class FileStorage:
 
     def all(self):
         """Returns dictionary __objects"""
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id"""
         if obj:
             key = f'{type(obj).__name__}.{obj.id}'
-            FileStorage.__objects[key] = obj
+            self.__objects[key] = obj
 
     def save(self):
         """Serializes __objects to the JSON file (path: __file_path)"""
         my_dict = {}
-        for key, value in FileStorage.__objects.items():
+        for key, value in self.__objects.items():
             my_dict[key] = value.to_dict()
-        with open(FileStorage.__file_path, 'w', encoding='utf-8') as file:
+        with open(self.__file_path, 'w', encoding='utf-8') as file:
             json.dump(my_dict, file)
 
     def reload(self):
         """Deserializes the JSON file to __objects"""
         try:
-            if os.path.exists(FileStorage.__file_path):
+            if os.path.exists(self.__file_path):
                 try:
-                    with open(FileStorage.__file_path, 'r', encoding='utf-8')\
+                    with open(self.__file_path, 'r', encoding='utf-8')\
                             as file:
-                        for key, value in json.loads(file.read()).items():
-                            obj = self.class_dict[value['__class__']](**value)
-                            FileStorage.__objects[key] = obj
-                except JSONDecodeError as e:
-                    print(f"JSONDecodeError Error: {e}")
-        except FileNotFoundError as e:
-            print(f"FileNotFoundError: {e}")
+                        obj_dict = json.load(file)
+                        for key, value in obj_dict.items():
+                            obj, obj_id = key.split(".")
+                            self.__objects[key] = globals()[obj](**value)
+                except JSONDecodeError:
+                    pass
+        except FileNotFoundError:
+            pass
