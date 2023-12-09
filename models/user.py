@@ -9,10 +9,10 @@ class User(BaseModel):
     """Inherits from BaseModel
 
     Attributes:
-        email: email.
-        password: password
-        first_name: first name.
-        last_name: last name.
+        email: string - empty string.
+        password: string - empty string.
+        first_name: string - empty string.
+        last_name: string - empty string.
     """
     email = ''
     password = ''

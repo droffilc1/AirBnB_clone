@@ -62,5 +62,38 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(my_model_dict['updated_at'], str(
             self.my_model.updated_at.isoformat()))
 
+    def test_init_with_kwargs(self):
+        """Tests if an arbituary keyworded argument is passed
+        to init"""
+        kwargs = {
+            'id': '12345hfhdk678',
+            'created_at': '2023-12-9T12:30:00.000000',
+            'name': 'Clifford',
+            'value': 89
+        }
+        base_mode = BaseModel(**kwargs)
+
+        self.assertEqual(base_mode.id, '12345hfhdk678')
+        self.assertEqual(base_mode.created_at, datetime(2023, 12, 9, 12, 30))
+        self.assertEqual(base_mode.name, 'Clifford')
+        self.assertEqual(base_mode.value, 89)
+
+    def test_init_with_args(self):
+        """Test when positional arguments are passed"""
+        self.assertIsInstance(self.my_model.id, str)
+        self.assertNotEqual(self.my_model.id, "")
+
+    def test_if_invalid_kwargs_is_passed(self):
+        """Test if invalid kwargs is passed"""
+        kwargs = {
+            'id': '12345hfhdk678',
+            '__class__': 'MyClass',
+            'created_at': '2023-12-09T12:30:00.000000',
+            'name': 'Clifford',
+        }
+
+        base_mode = BaseModel(**kwargs)
+        self.assertFalse(hasattr(base_mode, "BaseModel"))
+
 if __name__ == '__main__':
     unittest.main()
