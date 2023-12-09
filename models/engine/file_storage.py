@@ -6,6 +6,12 @@ import json
 from json.decoder import JSONDecodeError
 from ..base_model import BaseModel
 from ..user import User
+from ..place import Place
+from ..state import State
+from ..city import City
+from ..amenity import Amenity
+from ..review import Review
+
 
 class FileStorage:
     """Serializes instnces to a JSON file and
@@ -41,7 +47,8 @@ class FileStorage:
         try:
             if os.path.exists(FileStorage.__file_path):
                 try:
-                    with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
+                    with open(FileStorage.__file_path, 'r', encoding='utf-8')\
+                            as file:
                         for key, value in json.loads(file.read()).items():
                             obj = eval(value['__class__'])(**value)
                             FileStorage.__objects[key] = obj
