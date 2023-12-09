@@ -3,7 +3,6 @@
 
 import os.path
 import json
-from json.decoder import JSONDecodeError
 from ..base_model import BaseModel
 from ..user import User
 from ..place import Place
@@ -54,6 +53,6 @@ class FileStorage:
                     for key, value in obj_dict.items():
                         obj, obj_id = key.split(".")
                         if obj in self.class_dict:
-                            self.__objects[key] = self.class_dict[obj](**value)                            
+                            self.__objects[key] = self.class_dict[obj](**value)
         except FileNotFoundError:
             pass
