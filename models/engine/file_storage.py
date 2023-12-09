@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ file_storage module """
 
-from json.decoder import JSONDecodeError
-from ..base_model import BaseModel
 import os.path
 import json
+from json.decoder import JSONDecodeError
+from ..base_model import BaseModel
+from ..user import User
 
 class FileStorage:
     """Serializes instnces to a JSON file and
