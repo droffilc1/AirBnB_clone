@@ -16,3 +16,6 @@ class TestPycodestyle(unittest.TestCase):
                          "Found pycodestyle errors.")
         for result in results.messages:
             print(result)
+
+if __name__ == '__main__':
+    unittest.main()
