@@ -172,16 +172,21 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
 
-        if len(attributes) < 2:
-            print("** attribute name or value missing **")
+        if len(attributes) == 0:
+            print("** attribute dictionary missing **")
             return
 
-        attribute_name, value = attributes[0], attributes[1]
-        value = self.analyze_parameter_value(value)
+        # Convert the lsit of attributes into a dictionary
+        attribute_dict = dict(zip(attributes[::2], attributes[1::2]))
 
-        setattr(instance_data, attribute_name, value)
+        # Update the instance with the attributes from dictionary
+        for attribute_name, value in attribute_dict.items():
+            value = self.analyze_parameter_value(value)
+            setattr(instance_data, attribute_name, value)
+
         setattr(instance_data, 'updated_at', datetime.now())
         storage.save()
+        print(instance_data)
 
     def analyze_parameter_value(self, value):
         """Checks a parameter value for an update
@@ -252,7 +257,11 @@ class HBNBCommand(cmd.Cmd):
                 elif method_name == 'destroy':
                     class_id = splitted[2][1:-1]
                     self.do_destroy(class_name + ' ' + class_id)
-
+                elif method_name == 'update':
+                    class_id = splitted[2][1:-1]
+                    update_args = [arg for arg in splitted[3:] if arg]
+                    update_command = f'{class_name} {class_id} {" ".join(update_args)}'
+                    self.do_update(update_command)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
