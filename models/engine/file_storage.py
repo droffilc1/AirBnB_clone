@@ -53,6 +53,7 @@ class FileStorage:
                     for key, value in obj_dict.items():
                         obj, obj_id = key.split(".")
                         if obj in self.class_dict:
-                            self.__objects[key] = self.class_dict[obj](**value)
+                            self.__objects[f'{obj}.{obj_id}'] = \
+                            self.class_dict[obj](**value)
         except FileNotFoundError:
             pass
