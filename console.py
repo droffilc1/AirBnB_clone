@@ -5,6 +5,7 @@
 import cmd
 from datetime import datetime
 import shlex
+import re
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -48,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
             new_instance = model_class()
             new_instance.save()
             print(new_instance.id)
-        except KeyError:
+        except AttributeError:
             print("** class doesn't exist **")
 
     def parse_line_args(self, line):
@@ -93,10 +94,10 @@ class HBNBCommand(cmd.Cmd):
             else:
                 key = command + '.' + arg
                 data = storage.all().get(key)
-            if data is None:
-                print("** no instance found **")
-            else:
-                print(data)
+                if data is None:
+                    print("** no instance found **")
+                else:
+                    print(data)
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id"""
@@ -116,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
         command, instance_id = args
 
         key = command + '.' + instance_id
-        data = storage.all().get(key)
+        data = storage.all().pop(key, None)
 
         if data is None:
             print("** no instance found **")
@@ -128,13 +129,21 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, line):
         """Prints all string representation of all
         instances based or not on the class name"""
-        command = self.parseline(line)[0]
+        args = shlex.split(line)
+
+        if not args or args[0] not in self.classes:
+            print("** class name missing **")
+            return
+
+        class_name = args[0]
         objs = storage.all()
-        if command is None or command in self.classes:
-            keys = objs.keys()
+
+        if class_name == 'BaseModel' or class_name in self.classes:
             print(
-                [str(objs[key]) for key in keys
-                    if command is None or key.split('.')[0] == command]
+                [
+                    str(obj) for obj in objs.values()
+                    if isinstance(obj, globals()[class_name])
+                ]
             )
         else:
             print("** class doesn't exist **")
@@ -189,6 +198,61 @@ class HBNBCommand(cmd.Cmd):
             return float(value)
 
         return value
+
+    def get_objects(self, instance=''):
+        """Gets the elements created by the console
+
+        This method takes care of obtaining the information
+        of all the instances created in the file `objects.json`
+        that is used as the storage engine.
+
+        When an instance is sent as an argument, the function
+        takes care of getting only the instances that match the argument.
+
+        Args:
+            instance (:obj:`str`, optional): The instance to finds into
+                the objects.
+
+        Returns:
+            list: If the `instance` argument is not empty, it will search
+            only for objects that match the instance. Otherwise, it will show
+            all instances in the file where all objects are stored.
+
+        """
+        objects = storage.all()
+
+        if instance:
+            keys = objects.keys()
+            return [str(val) for key, val in objects.items()
+                    if key.startswith(instance)]
+
+        return [str(val) for key, val in objects.items()]
+
+    def default(self, line):
+        """
+        When the command prefix is not recognized, this method
+        looks for whether the command entered has the syntax:
+            "<class name>.<method name>" or not,
+        and links it to the corresponding method in case the
+        class exists and the method belongs to the class.
+
+        """
+        if '.' in line:
+            splitted = re.split(r'\.|\(|\)', line)
+            class_name = splitted[0]
+            method_name = splitted[1]
+
+            if class_name in self.classes:
+                if method_name == 'all':
+                    print(self.get_objects(class_name))
+                elif method_name == 'count':
+                    print(len(self.get_objects(class_name)))
+                elif method_name == 'show':
+                    class_id = splitted[2][1:-1]
+                    self.do_show(class_name + ' ' + class_id)
+                elif method_name == 'destroy':
+                    class_id = splitted[2][1:-1]
+                    self.do_destroy(class_name + ' ' + class_id)
 
 
 if __name__ == '__main__':
