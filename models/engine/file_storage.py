@@ -54,6 +54,6 @@ class FileStorage:
                         obj, obj_id = key.split(".")
                         if obj in self.class_dict:
                             self.__objects[f'{obj}.{obj_id}'] = \
-                            self.class_dict[obj](**value)
+                             self.class_dict[obj](**value)
         except FileNotFoundError:
             pass
