@@ -34,5 +34,6 @@ class TestReview(unittest.TestCase):
         output = f'[Review] ({self.my_model.id}) {self.my_model.__dict__}'
         self.assertEqual(str(self.my_model), output)
 
+
 if __name__ == '__main__':
     unittest.main()

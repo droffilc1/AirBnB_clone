@@ -260,8 +260,10 @@ class HBNBCommand(cmd.Cmd):
                 elif method_name == 'update':
                     class_id = splitted[2][1:-1]
                     update_args = [arg for arg in splitted[3:] if arg]
-                    update_command = f'{class_name} {class_id} {" ".join(update_args)}'
+                    update_command = f'{class_name} {class_id} \
+                    {" ".join(update_args)}'
                     self.do_update(update_command)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

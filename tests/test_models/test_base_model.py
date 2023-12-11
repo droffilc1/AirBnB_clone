@@ -96,5 +96,6 @@ class TestBaseModel(unittest.TestCase):
         base_mode = BaseModel(**kwargs)
         self.assertFalse(hasattr(base_mode, "BaseModel"))
 
+
 if __name__ == '__main__':
     unittest.main()
