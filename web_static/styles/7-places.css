@@ -1,0 +1,24 @@
+h1 {
+    font-size: 30px;
+    margin-top: 30px;
+}
+
+article {
+    width: 390px;
+    padding: 30px;
+    margin: 30px;
+    border: 1px #FF5A5F solid;
+    border-radius: 4px;    
+}
+
+h2 {
+    font-size: 30px;
+    text-align: center;
+}
+
+.listings {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
