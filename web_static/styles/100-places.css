@@ -1,0 +1,149 @@
+.places h1 {
+    font-size: 30px;
+    margin-top: 30px;
+}
+
+article {
+    position: relative;
+    width: 390px;
+    padding: 30px;
+    margin: 30px;
+    border: 1px #FF5A5F solid;
+    border-radius: 4px;    
+}
+
+article h2 {
+    font-size: 30px;
+    text-align: center;
+}
+
+.listings {    
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.price_by_night {  
+    position: absolute; 
+    top: 10px;
+    right: 10px;        
+    color: #FF5A5F;
+    border: 4px #FF5A5F solid;
+    border-radius: 50%; 
+    min-width: 60px;
+    height: 60px;
+    font-size: 20px;   
+    text-align: center;
+    line-height: 60px;          
+}
+
+
+.information {
+    height: 80px;
+    border-top: 1px #DDDDDD solid;
+    border-bottom: 1px #DDDDDD solid;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+}
+
+
+.max_guest, .number_rooms, .number_bathrooms {
+    width: 100px;
+}
+
+.max_guest {
+    background-image: url("/images/icon_group.png");
+    background-repeat: no-repeat;
+}
+
+.number_rooms {
+    background-image: url("/images/icon_bed.png");
+    background-repeat: no-repeat;
+}
+
+.number_bathrooms {
+    background-image: url("/images/icon_bath.png");
+    background-repeat: no-repeat;
+}
+
+.information p {
+    margin-top: 50px;
+}
+
+.owner {
+    margin: 10px 0;
+}
+
+.amenities1 {
+    width: 100%;      
+}
+
+.amenities1 h2 {    
+    font-size: 16px;
+    border-bottom: 1px #DDDDDD solid; 
+    margin-top: 40px;
+    width: 100%;  
+    padding-bottom: 10px;
+    display: inline-flex;
+           
+}
+
+.amenities1 ul li{
+    margin-top: 10px;
+    list-style-type: none;
+    background-repeat: no-repeat;   
+    padding-top: 20px; 
+}
+
+li.tv {
+    display: flex;  
+    justify-content: space-between;  
+    align-items: center;     
+    background-image: url("/images/icon_tv.png"); 
+    padding-left: 80px;  
+}    
+
+li.wifi {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;     
+    background-image: url("/images/icon_wifi.png");
+    padding-left: 80px;
+}
+
+li.pets_friendly {
+    display: flex;  
+    justify-content: space-between;  
+    align-items: center;       
+    background-image: url("/images/icon_pets.png");
+    padding-left: 80px;
+}
+
+.reviews {
+    margin-top: 40px;        
+}
+
+.reviews h2 {
+    font-size: 16px;
+    border-bottom: 1px #DDDDDD solid;
+    padding-bottom: 10px;
+    width: 100%;
+    display: inline-flex;
+}
+
+.reviews ul li {    
+    list-style-type: none;
+}
+
+.reviews ul li h3 {
+    font-size: 14px;
+    margin-bottom: 5px; 
+    padding-left: 0;      
+}
+
+.reviews ul li p {
+    font-size: 12px;
+}
